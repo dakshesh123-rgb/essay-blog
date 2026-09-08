@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Essays Archives</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --border: #dddddd;
+            --accent: #900000;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Royal Enfield Loading Screen */
+        .loader-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .bike-container {
+            position: relative;
+            animation: thump 0.08s infinite alternate;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bike-container.zoom-off {
+            animation: zoomOff 0.6s cubic-bezier(0.5, 0, 1, 0.5) forwards;
+        }
+
+        @keyframes thump {
+            from { transform: translateY(0px) rotate(0deg); }
+            to { transform: translateY(-2px) rotate(0.5deg); }
+        }
+
+        @keyframes zoomOff {
+            0% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(100vw) rotate(-5deg); }
+        }
+
+        .smoke {
+            position: absolute;
+            bottom: 15px;
+            left: -10px;
+            width: 15px;
+            height: 15px;
+            background: #aaa;
+            border-radius: 50%;
+            opacity: 0;
+            animation: puff 0.6s infinite;
+        }
+
+        .smoke-2 {
+            animation-delay: 0.3s;
+            left: -20px;
+            width: 10px;
+            height: 10px;
+        }
+
+        @keyframes puff {
+            0% { transform: scale(0.5) translate(0, 0); opacity: 0.8; }
+            100% { transform: scale(2.5) translate(-30px, -15px); opacity: 0; }
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background-color: var(--accent);
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        .welcome-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-main);
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-style: italic;
+        }
+
+        /* Header / Nav */
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px 30px;
+            border-bottom: 2px solid var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .site-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color 0.3s;
+        }
+
+        .site-title:hover {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .essay-date {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .essay-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin: 0 0 40px 0;
+            line-height: 1.2;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .essay-content {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin: 0 0 25px 0;
+            white-space: pre-wrap;
+            line-height: 2;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 50px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        .delete-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 30px 20px;
+            text-align: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .essay-title { font-size: 2.2rem; }
+            header { flex-direction: column; align-items: center; gap: 20px; }
+            .nav-links a { margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-bar"></div>
+
+    <!-- Royal Enfield Loader -->
+    <div id="loader" class="loader-overlay">
+        <div class="bike-container">
+            <h2 class="welcome-text">Welcome</h2>
+            <svg viewBox="0 0 120 70" width="160" height="90" class="bullet-bike">
+                <!-- Exhaust -->
+                <line x1="20" y1="55" x2="70" y2="55" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                <!-- Wheels -->
+                <circle cx="25" cy="50" r="16" stroke="#222" stroke-width="4" fill="none"/>
+                <circle cx="95" cy="50" r="16" stroke="#222" stroke-width="4" fill="none"/>
+                <circle cx="25" cy="50" r="2" fill="#222"/>
+                <circle cx="95" cy="50" r="2" fill="#222"/>
+                <!-- Front Forks -->
+                <line x1="95" y1="50" x2="80" y2="15" stroke="#222" stroke-width="4"/>
+                <!-- Frame -->
+                <path d="M 25 50 L 45 25 L 75 25 L 95 50" stroke="#222" stroke-width="4" fill="none"/>
+                <!-- Engine -->
+                <rect x="50" y="32" width="20" height="22" fill="#222" rx="3"/>
+                <line x1="50" y1="36" x2="70" y2="36" stroke="#fff" stroke-width="2"/>
+                <line x1="50" y1="42" x2="70" y2="42" stroke="#fff" stroke-width="2"/>
+                <line x1="50" y1="48" x2="70" y2="48" stroke="#fff" stroke-width="2"/>
+                <!-- Seat -->
+                <path d="M 35 25 Q 45 22 55 25" stroke="#222" stroke-width="6" stroke-linecap="round" fill="none"/>
+                <!-- Tank (Classic Teardrop) -->
+                <path d="M 55 25 C 55 15, 80 15, 80 25 Z" fill="var(--accent)"/>
+                <!-- Handlebars -->
+                <path d="M 80 15 C 75 10, 70 10, 65 5" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <!-- Headlight -->
+                <circle cx="85" cy="20" r="5" fill="#222"/>
+                <!-- Mudguards -->
+                <path d="M 10 50 A 18 18 0 0 1 40 45" stroke="#222" stroke-width="3" fill="none"/>
+                <path d="M 80 45 A 18 18 0 0 1 110 50" stroke="#222" stroke-width="3" fill="none"/>
+            </svg>
+            <div class="smoke"></div>
+            <div class="smoke smoke-2"></div>
+        </div>
+    </div>
+
+    <header>
+        <a href="/" class="site-title">Archives</a>
+        <nav class="nav-links">
+            <a href="/">All Essays</a>
+            <a href="/publish">Publish</a>
+        </nav>
+    </header>
+
+    <main id="essay-container">
+        <p style="color: var(--text-muted); text-align: center; font-style: italic;">Loading essay...</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. All rights reserved.</p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const bike = document.querySelector('.bike-container');
+                const loader = document.getElementById('loader');
+                if (bike && loader) {
+                    bike.classList.add('zoom-off');
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }, 400); 
+                }
+            }, 800); 
+        });
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        async function deletePost(id) {
+            const key = prompt("Enter the 30-character encrypted key to delete this essay:");
+            if (!key) return;
+
+            try {
+                const response = await fetch(`/api/publish/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+
+                if (response.ok) {
+                    alert("Essay deleted successfully.");
+                    window.location.href = "/";
+                } else {
+                    const data = await response.json();
+                    alert(data.error || "Failed to delete essay.");
+                }
+            } catch (err) {
+                alert("Network error. Please try again.");
+            }
+        }
+
+        async function loadEssay() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+                
+                if (!id) {
+                    document.getElementById('essay-container').innerHTML = '<p style="text-align: center;">Essay not found.</p>';
+                    return;
+                }
+
+                const response = await fetch('/api/posts');
+                const posts = await response.json();
+                const post = posts.find(p => p.id.toString() === id);
+                
+                const container = document.getElementById('essay-container');
+                
+                if (!post) {
+                    container.innerHTML = '<p style="text-align: center;">Essay not found.</p>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <span class="essay-date">${post.date}</span>
+                    <h1 class="essay-title">${post.title}</h1>
+                    <div class="essay-content">${post.content}</div>
+                    <a href="/" class="back-link">&larr; Back to Archives</a>
+                    
+                    <div class="actions">
+                        <a href="/publish?edit=${post.id}" class="action-btn">Edit Essay</a>
+                        <button onclick="deletePost(${post.id})" class="action-btn delete-btn">Delete Essay</button>
+                    </div>
+                `;
+                
+                document.title = `${post.title} - Archives`;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('essay-container').innerHTML = '<p style="text-align: center;">Error loading essay.</p>';
+            }
+        }
+        
+        loadEssay();
+    </script>
+</body>
+</html>

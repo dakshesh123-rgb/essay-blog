@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish - Personal Essays</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --border: #dddddd;
+            --accent: #900000;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px 30px;
+            border-bottom: 2px solid var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .site-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; color: var(--text-main); transition: color 0.3s; }
+        .site-title:hover { color: var(--accent); }
+        
+        .nav-links a { font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 1px; margin-left: 25px; text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; }
+        .nav-links a:hover { color: var(--accent); }
+
+        main {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Royal Enfield Loading Screen */
+        .loader-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .bike-container {
+            position: relative;
+            animation: thump 0.08s infinite alternate;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bike-container.zoom-off {
+            animation: zoomOff 0.6s cubic-bezier(0.5, 0, 1, 0.5) forwards;
+        }
+
+        @keyframes thump {
+            from { transform: translateY(0px) rotate(0deg); }
+            to { transform: translateY(-2px) rotate(0.5deg); }
+        }
+
+        @keyframes zoomOff {
+            0% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(100vw) rotate(-5deg); }
+        }
+
+        .smoke {
+            position: absolute;
+            bottom: 15px;
+            left: -10px;
+            width: 15px;
+            height: 15px;
+            background: #aaa;
+            border-radius: 50%;
+            opacity: 0;
+            animation: puff 0.6s infinite;
+        }
+
+        .smoke-2 {
+            animation-delay: 0.3s;
+            left: -20px;
+            width: 10px;
+            height: 10px;
+        }
+
+        @keyframes puff {
+            0% { transform: scale(0.5) translate(0, 0); opacity: 0.8; }
+            100% { transform: scale(2.5) translate(-30px, -15px); opacity: 0; }
+        }
+
+        .welcome-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--text-main);
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-style: italic;
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 40px; font-style: italic; }
+
+        .form-group { margin-bottom: 30px; }
+        
+        label { display: block; margin-bottom: 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        
+        input[type="text"], input[type="password"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border);
+            font-size: 1.1rem;
+            font-family: 'Lora', serif;
+            box-sizing: border-box;
+            background: #fafafa;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--text-main);
+            background: #fff;
+        }
+
+        textarea { resize: vertical; min-height: 400px; line-height: 1.8; }
+
+        button {
+            background-color: var(--text-main);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover { background-color: var(--accent); }
+
+        #message { margin-top: 30px; padding: 20px; display: none; font-style: italic; }
+        .success { border-left: 4px solid #2e7d32; background: #f1f8e9; color: #2e7d32; }
+        .error { border-left: 4px solid #c62828; background: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+
+    <!-- Royal Enfield Loader -->
+    <div id="loader" class="loader-overlay">
+        <div class="bike-container">
+            <h2 class="welcome-text">Welcome</h2>
+            <svg viewBox="0 0 120 70" width="160" height="90" class="bullet-bike">
+                <!-- Exhaust -->
+                <line x1="20" y1="55" x2="70" y2="55" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                <!-- Wheels -->
+                <circle cx="25" cy="50" r="16" stroke="#222" stroke-width="4" fill="none"/>
+                <circle cx="95" cy="50" r="16" stroke="#222" stroke-width="4" fill="none"/>
+                <circle cx="25" cy="50" r="2" fill="#222"/>
+                <circle cx="95" cy="50" r="2" fill="#222"/>
+                <!-- Front Forks -->
+                <line x1="95" y1="50" x2="80" y2="15" stroke="#222" stroke-width="4"/>
+                <!-- Frame -->
+                <path d="M 25 50 L 45 25 L 75 25 L 95 50" stroke="#222" stroke-width="4" fill="none"/>
+                <!-- Engine -->
+                <rect x="50" y="32" width="20" height="22" fill="#222" rx="3"/>
+                <line x1="50" y1="36" x2="70" y2="36" stroke="#fff" stroke-width="2"/>
+                <line x1="50" y1="42" x2="70" y2="42" stroke="#fff" stroke-width="2"/>
+                <line x1="50" y1="48" x2="70" y2="48" stroke="#fff" stroke-width="2"/>
+                <!-- Seat -->
+                <path d="M 35 25 Q 45 22 55 25" stroke="#222" stroke-width="6" stroke-linecap="round" fill="none"/>
+                <!-- Tank (Classic Teardrop) -->
+                <path d="M 55 25 C 55 15, 80 15, 80 25 Z" fill="var(--accent)"/>
+                <!-- Handlebars -->
+                <path d="M 80 15 C 75 10, 70 10, 65 5" stroke="#222" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <!-- Headlight -->
+                <circle cx="85" cy="20" r="5" fill="#222"/>
+                <!-- Mudguards -->
+                <path d="M 10 50 A 18 18 0 0 1 40 45" stroke="#222" stroke-width="3" fill="none"/>
+                <path d="M 80 45 A 18 18 0 0 1 110 50" stroke="#222" stroke-width="3" fill="none"/>
+            </svg>
+            <div class="smoke"></div>
+            <div class="smoke smoke-2"></div>
+        </div>
+    </div>
+
+    <header>
+        <a href="/" class="site-title">Archives</a>
+        <nav class="nav-links">
+            <a href="/">Back to Archive</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Publish new work</h1>
+        
+        <form id="publishForm">
+            <div class="form-group">
+                <label for="title">Title of the Essay</label>
+                <input type="text" id="title" required placeholder="Enter the title here">
+            </div>
+            
+            <div class="form-group">
+                <label for="content">Essay Body</label>
+                <textarea id="content" required placeholder="Start writing your personal essay..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="key">Encrypted Key (30 Characters)</label>
+                <input type="password" id="key" required placeholder="Enter the 30-character publishing key">
+            </div>
+            
+            <button type="submit" id="submitBtn">Publish Work</button>
+        </form>
+
+        <div id="message"></div>
+    </main>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const bike = document.querySelector('.bike-container');
+                const loader = document.getElementById('loader');
+                if (bike && loader) {
+                    bike.classList.add('zoom-off');
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => loader.style.display = 'none', 500);
+                    }, 400); 
+                }
+            }, 800); 
+        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const editId = urlParams.get('edit');
+        
+        if (editId) {
+            document.querySelector('h1').textContent = 'Edit Essay';
+            document.getElementById('submitBtn').textContent = 'Update Work';
+            
+            // Fetch existing post data
+            fetch('/api/posts').then(res => res.json()).then(posts => {
+                const post = posts.find(p => p.id.toString() === editId);
+                if (post) {
+                    document.getElementById('title').value = post.title;
+                    document.getElementById('content').value = post.content;
+                }
+            });
+        }
+
+        document.getElementById('publishForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('message');
+            
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const key = document.getElementById('key').value;
+            
+            btn.disabled = true;
+            btn.textContent = editId ? 'Updating...' : 'Publishing...';
+            
+            try {
+                const url = editId ? `/api/publish/${editId}` : '/api/publish';
+                const method = editId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, key })
+                });
+                
+                const data = await response.json();
+                
+                msg.style.display = 'block';
+                if (response.ok) {
+                    msg.className = 'success';
+                    msg.textContent = editId ? 'Essay updated successfully!' : 'Essay published successfully! It is now live in the archives.';
+                    if (!editId) {
+                        document.getElementById('title').value = '';
+                        document.getElementById('content').value = '';
+                    }
+                } else {
+                    msg.className = 'error';
+                    msg.textContent = data.error || 'Something went wrong.';
+                }
+            } catch (err) {
+                msg.style.display = 'block';
+                msg.className = 'error';
+                msg.textContent = 'Network error. Please try again.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = editId ? 'Update Work' : 'Publish Work';
+            }
+        });
+    </script>
+</body>
+</html>
