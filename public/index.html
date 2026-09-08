@@ -291,7 +291,7 @@
     <header>
         <a href="/" class="site-title">Archives</a>
         <nav class="nav-links">
-            <a href="/publish">Publish</a>
+            <a href="/">Home</a>
         </nav>
     </header>
 
@@ -327,7 +327,7 @@
 
         async function loadEssays() {
             try {
-                const response = await fetch('/api/posts');
+                const response = await fetch('/posts.json');
                 const posts = await response.json();
                 
                 const list = document.getElementById('essay-list');
