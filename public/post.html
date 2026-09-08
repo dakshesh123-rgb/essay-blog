@@ -312,6 +312,7 @@
         <a href="/" class="site-title">Archives</a>
         <nav class="nav-links">
             <a href="/">All Essays</a>
+            <a href="/publish">Publish</a>
         </nav>
     </header>
 
@@ -345,6 +346,29 @@
             document.getElementById('progress-bar').style.width = scrolled + '%';
         });
 
+        async function deletePost(id) {
+            const key = prompt("Enter the 30-character encrypted key to delete this essay:");
+            if (!key) return;
+
+            try {
+                const response = await fetch(`/api/publish/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key })
+                });
+
+                if (response.ok) {
+                    alert("Essay deleted successfully.");
+                    window.location.href = "/";
+                } else {
+                    const data = await response.json();
+                    alert(data.error || "Failed to delete essay.");
+                }
+            } catch (err) {
+                alert("Network error. Please try again.");
+            }
+        }
+
         async function loadEssay() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -355,7 +379,7 @@
                     return;
                 }
 
-                const response = await fetch('/posts.json');
+                const response = await fetch('/api/posts');
                 const posts = await response.json();
                 const post = posts.find(p => p.id.toString() === id);
                 
@@ -371,6 +395,11 @@
                     <h1 class="essay-title">${post.title}</h1>
                     <div class="essay-content">${post.content}</div>
                     <a href="/" class="back-link">&larr; Back to Archives</a>
+                    
+                    <div class="actions">
+                        <a href="/publish?edit=${post.id}" class="action-btn">Edit Essay</a>
+                        <button onclick="deletePost(${post.id})" class="action-btn delete-btn">Delete Essay</button>
+                    </div>
                 `;
                 
                 document.title = `${post.title} - Archives`;

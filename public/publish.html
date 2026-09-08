@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Essays Archives</title>
-    <!-- Google Fonts for Literary Magazine Look -->
+    <title>Publish - Personal Essays</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -14,20 +13,40 @@
             --text-main: #222222;
             --text-muted: #555555;
             --border: #dddddd;
-            --accent: #900000; /* Subtle dark red often used in literary journals */
+            --accent: #900000;
         }
 
         body {
-            font-family: 'Lora', serif; /* Body text */
+            font-family: 'Lora', serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.8;
             margin: 0;
             padding: 0;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* Animations & Hover Effects */
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px 30px;
+            border-bottom: 2px solid var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .site-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; color: var(--text-main); transition: color 0.3s; }
+        .site-title:hover { color: var(--accent); }
+        
+        .nav-links a { font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 1px; margin-left: 25px; text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; }
+        .nav-links a:hover { color: var(--accent); }
+
+        main {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -104,148 +123,49 @@
             font-style: italic;
         }
 
-        .essay-item {
-            margin-bottom: 60px;
-            padding-bottom: 50px;
-            border-bottom: 1px solid var(--border);
-            animation: fadeIn 0.8s ease-out backwards;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 40px; font-style: italic; }
 
-        .essay-item:hover {
-            transform: translateY(-3px);
-            border-color: var(--text-main);
-        }
-
-        .essay-item:last-child {
-            border-bottom: none;
-        }
-
-        .essay-date {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 15px;
-            display: block;
-            transition: color 0.3s;
-        }
-
-        .essay-item:hover .essay-date {
-            color: var(--accent);
-        }
-
-        .essay-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin: 0 0 20px 0;
-            line-height: 1.2;
-            font-weight: 700;
-        }
-
-        .hero {
-            margin-bottom: 70px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .form-group { margin-bottom: 30px; }
+        
+        label { display: block; margin-bottom: 10px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        
+        input[type="text"], input[type="password"], textarea {
             width: 100%;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--text-main);
-            font-style: italic;
-            text-align: center;
-        }
-
-        .hero p {
+            padding: 15px;
+            border: 1px solid var(--border);
             font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-top: 0;
             font-family: 'Lora', serif;
-            text-align: center;
-        }
-
-        .read-link {
-            font-family: 'Playfair Display', serif; 
-            font-weight: 700; 
-            color: var(--accent); 
-            text-decoration: none; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            transition: color 0.3s ease;
-        }
-
-        .read-link span {
-            display: inline-block;
-            transition: transform 0.3s ease;
-            margin-left: 5px;
-        }
-
-        .essay-item:hover .read-link span {
-            transform: translateX(6px);
-        }
-
-        .essay-content {
-            font-size: 1.15rem;
-            color: var(--text-main);
-            margin: 0 0 25px 0;
-            white-space: pre-wrap;
-            line-height: 1.9;
-        }
-
-        /* Header / Nav */
-        header {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 50px 20px 30px;
-            border-bottom: 2px solid var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
+            box-sizing: border-box;
+            background: #fafafa;
+            transition: border-color 0.2s, background-color 0.2s;
         }
         
-        .nav-links a {
-            margin: 0;
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--text-main);
+            background: #fff;
         }
 
-        /* Footer */
-        footer {
-            max-width: 800px;
-            margin: 80px auto 40px;
-            padding: 30px 20px;
-            text-align: center;
+        textarea { resize: vertical; min-height: 400px; line-height: 1.8; }
+
+        button {
+            background-color: var(--text-main);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
 
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.2rem; }
-            .essay-title { font-size: 1.8rem; }
-            header { flex-direction: column; align-items: center; gap: 20px; }
-            .nav-links a { margin: 0 10px; }
-        }
+        button:hover { background-color: var(--accent); }
+
+        #message { margin-top: 30px; padding: 20px; display: none; font-style: italic; }
+        .success { border-left: 4px solid #2e7d32; background: #f1f8e9; color: #2e7d32; }
+        .error { border-left: 4px solid #c62828; background: #ffebee; color: #c62828; }
     </style>
 </head>
 <body>
@@ -291,24 +211,34 @@
     <header>
         <a href="/" class="site-title">Archives</a>
         <nav class="nav-links">
-            <a href="/publish">Publish</a>
+            <a href="/">Back to Archive</a>
         </nav>
     </header>
 
     <main>
-        <div class="hero">
-            <h1>Personal Essays</h1>
-            <p>A collection of original works</p>
-        </div>
+        <h1>Publish new work</h1>
+        
+        <form id="publishForm">
+            <div class="form-group">
+                <label for="title">Title of the Essay</label>
+                <input type="text" id="title" required placeholder="Enter the title here">
+            </div>
+            
+            <div class="form-group">
+                <label for="content">Essay Body</label>
+                <textarea id="content" required placeholder="Start writing your personal essay..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="key">Encrypted Key (30 Characters)</label>
+                <input type="password" id="key" required placeholder="Enter the 30-character publishing key">
+            </div>
+            
+            <button type="submit" id="submitBtn">Publish Work</button>
+        </form>
 
-        <ul class="essay-list" id="essay-list">
-            <p style="color: var(--text-muted); text-align: center; font-style: italic;">Loading essays...</p>
-        </ul>
+        <div id="message"></div>
     </main>
-
-    <footer>
-        <p>&copy; 2026. All rights reserved.</p>
-    </footer>
 
     <script>
         window.addEventListener('load', () => {
@@ -324,47 +254,69 @@
                 }
             }, 800); 
         });
-
-        async function loadEssays() {
-            try {
-                const response = await fetch('/api/posts');
-                const posts = await response.json();
-                
-                const list = document.getElementById('essay-list');
-                
-                if (posts.length === 0) {
-                    list.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-style: italic;">No personal essays have been published yet.</p>';
-                    return;
-                }
-
-                list.innerHTML = '';
-                posts.forEach((post, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'essay-item';
-                    li.style.animationDelay = `${index * 0.1}s`;
-                    
-                    // Create an excerpt
-                    const maxLength = 250;
-                    let excerpt = post.content;
-                    if (excerpt.length > maxLength) {
-                        excerpt = excerpt.substring(0, maxLength) + '...';
-                    }
-
-                    li.innerHTML = `
-                        <span class="essay-date">${post.date}</span>
-                        <h2 class="essay-title"><a href="/post?id=${post.id}" style="text-decoration: none; color: inherit;">${post.title}</a></h2>
-                        <div class="essay-content">${excerpt}</div>
-                        <a href="/post?id=${post.id}" class="read-link">Read full essay <span>&rarr;</span></a>
-                    `;
-                    list.appendChild(li);
-                });
-            } catch (err) {
-                console.error(err);
-                document.getElementById('essay-list').innerHTML = '<p style="text-align: center;">Error loading essays.</p>';
-            }
-        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const editId = urlParams.get('edit');
         
-        loadEssays();
+        if (editId) {
+            document.querySelector('h1').textContent = 'Edit Essay';
+            document.getElementById('submitBtn').textContent = 'Update Work';
+            
+            // Fetch existing post data
+            fetch('/api/posts').then(res => res.json()).then(posts => {
+                const post = posts.find(p => p.id.toString() === editId);
+                if (post) {
+                    document.getElementById('title').value = post.title;
+                    document.getElementById('content').value = post.content;
+                }
+            });
+        }
+
+        document.getElementById('publishForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('message');
+            
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const key = document.getElementById('key').value;
+            
+            btn.disabled = true;
+            btn.textContent = editId ? 'Updating...' : 'Publishing...';
+            
+            try {
+                const url = editId ? `/api/publish/${editId}` : '/api/publish';
+                const method = editId ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content, key })
+                });
+                
+                const data = await response.json();
+                
+                msg.style.display = 'block';
+                if (response.ok) {
+                    msg.className = 'success';
+                    msg.textContent = editId ? 'Essay updated successfully!' : 'Essay published successfully! It is now live in the archives.';
+                    if (!editId) {
+                        document.getElementById('title').value = '';
+                        document.getElementById('content').value = '';
+                    }
+                } else {
+                    msg.className = 'error';
+                    msg.textContent = data.error || 'Something went wrong.';
+                }
+            } catch (err) {
+                msg.style.display = 'block';
+                msg.className = 'error';
+                msg.textContent = 'Network error. Please try again.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = editId ? 'Update Work' : 'Publish Work';
+            }
+        });
     </script>
 </body>
 </html>
