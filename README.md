@@ -9,7 +9,7 @@ GitHub repository: [https://github.com/dakshesh123-rgb/essay-blog](https://githu
 
 I wanted a quiet, distraction-free space on the web to write and publish long-form essays about philosophy, mental discipline, and ideas that matter to me. 
 
- Since I code everything on an Android phone using Termux, I wanted a clean platform that I understand from top to bottom—one with zero framework overhead, fast loading times, and a vintage literary journal aesthetic.
+Since I code everything on an Android phone using Termux, I wanted a clean platform that I understand from top to bottom—one with zero framework overhead, fast loading times, and a vintage literary journal aesthetic.
 
 ## What's in it
 
@@ -21,4 +21,23 @@ I wanted a quiet, distraction-free space on the web to write and publish long-fo
   - **Serverless production**: Runs on Cloudflare Pages Functions (`functions/api/posts.js`, `publish.js`) backed by Cloudflare KV (`ESSAYS_DB`) for instant edge delivery and zero hosting cost.
   - **Offline local runtime**: Includes a standalone `server.js` using Node's standard `http` and `fs` modules with JSON persistence (`posts.json`) so I can write and test essays locally on Termux without an active internet connection.
 
+## Running it locally
 
+You don't need `npm install`, `node_modules`, or any external build tools. It runs entirely on Node's native built-ins:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/dakshesh123-rgb/essay-blog.git
+cd essay-blog
+```
+
+### 2. Start the local server
+```bash
+node server.js
+```
+
+### 3. Open in your browser
+- **Home / Archives:** `http://localhost:3000`
+- **Publish / Editor:** `http://localhost:3000/publish`
+
+When running locally, all essays are automatically saved to and read from `posts.json` in the project root.
